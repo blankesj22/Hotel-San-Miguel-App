@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "373650344601",
+    "project_id": "hotelsanmiguel-c76da",
+    "storage_bucket": "hotelsanmiguel-c76da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373650344601:android:6235fe453b32eea4c78608",
+        "android_client_info": {
+          "package_name": "com.example.hotel_san_miguel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373650344601-ik92ijmuj70apef46fd3ld39jdr1p7cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXI1wvVf97yddi8ffDkHTA9jiIRC5vmQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373650344601-ik92ijmuj70apef46fd3ld39jdr1p7cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

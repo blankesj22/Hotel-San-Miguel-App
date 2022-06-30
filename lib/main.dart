@@ -222,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       child: const Text('Crear'),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue.shade900,
+                        primary: Colors.red.shade700,
                       ),
                       onPressed: () async {
                         if (!_formKeyCreate.currentState!.validate()) {
@@ -273,6 +273,7 @@ class _HomePageState extends State<HomePage> {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
                                   "Se ha creado el cliente $names $lastName.")));
+                          Navigator.pop(context);
                         }
                       },
                     )
@@ -457,7 +458,7 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       child: const Text('Actualizar'),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue.shade900,
+                        primary: Colors.red.shade700,
                       ),
                       onPressed: () async {
                         if (!_formKeyUpdate.currentState!.validate()) {
@@ -503,6 +504,13 @@ class _HomePageState extends State<HomePage> {
                         });
 
                         _limpiarTextos();
+
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Se ha actualizado el cliente $names $lastName.")));
+                          Navigator.pop(context);
+                        }
                       },
                     )
                   ],
@@ -560,7 +568,7 @@ class _HomePageState extends State<HomePage> {
           _create();
         },
         child: const Icon(Icons.person_add),
-        backgroundColor: Colors.blue.shade900,
+        backgroundColor: Colors.red.shade700,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StreamBuilder(

@@ -31,6 +31,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _formKeyCreate = GlobalKey<FormState>();
+  final _formKeyUpdate = GlobalKey<FormState>();
+
   final TextEditingController _namesController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _dniNumberController = TextEditingController();
@@ -74,237 +77,207 @@ class _HomePageState extends State<HomePage> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext ctx) {
-          return Padding(
-            padding: EdgeInsets.only(
-              top: 20,
-              left: 20,
-              right: 20,
-              //prevent the soft keyboard from covering text fields
-              bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text(
-                        'Registrar Cliente',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+          return Form(
+            key: _formKeyCreate,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20,
+                left: 20,
+                right: 20,
+                //prevent the soft keyboard from covering text fields
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          'Registrar Cliente',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'Ingreso  ',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        '  Salida  ',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DatetimePickerWidget((p0) {
-                        debugPrint('$p0');
-
-                        final d = p0.toDate();
-
-                        debugPrint('${d.day}/${d.month}/${d.year}');
-                        debugPrint('${d.hour}:${d.minute}');
-
-                        setState(() {
-                          _checkIn = p0;
-                        });
-                      }),
-                      DatetimePickerWidget((p0) {
-                        debugPrint('$p0');
-
-                        final d = p0.toDate();
-
-                        debugPrint('${d.day}/${d.month}/${d.year}');
-                        debugPrint('${d.hour}:${d.minute}');
-
-                        setState(() {
-                          _checkOut = p0;
-                        });
-                      }),
-                    ],
-                  ),
-                  TextField(
-                    controller: _namesController,
-                    decoration: const InputDecoration(labelText: 'Nombres'),
-                  ),
-                  TextField(
-                    controller: _lastNameController,
-                    decoration: const InputDecoration(labelText: 'Apellidos'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _dniNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Dni N°'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _maritalStatusController,
-                          decoration:
-                              const InputDecoration(labelText: 'Estado Civil'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _sexController,
-                          decoration: const InputDecoration(labelText: 'Sexo'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _ageController,
-                          decoration: const InputDecoration(labelText: 'Edad'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    controller: _occupationController,
-                    decoration: const InputDecoration(labelText: 'Ocupación'),
-                  ),
-                  TextField(
-                    controller: _originController,
-                    decoration: const InputDecoration(labelText: 'Procedencia'),
-                  ),
-                  TextField(
-                    controller: _destinyController,
-                    decoration: const InputDecoration(labelText: 'Destino'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 100.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _roomNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Habitación N°'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _adultsNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Adultos N°'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _childrenNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Niños N°'),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  // check out with date picker of selection date and time
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    child: const Text('Crear'),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue.shade900,
+                      ],
                     ),
-                    onPressed: () async {
-                      final String names = _namesController.text;
-                      final String lastName = _lastNameController.text;
-                      final String dniNumber = _dniNumberController.text;
-                      final String sex = _sexController.text;
-                      final String age = _ageController.text;
-                      final String maritalStatus =
-                          _maritalStatusController.text;
-                      final String occupation = _occupationController.text;
-                      final String origin = _originController.text;
-                      final String destiny = _destinyController.text;
-                      final String roomNumber = _roomNumberController.text;
-                      final String adultsNumber = _adultsNumberController.text;
-                      final String childrenNumber =
-                          _childrenNumberController.text;
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Ingreso  ',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          '  Salida  ',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DatetimePickerWidget((p0) {
+                          debugPrint('$p0');
 
-                      await _customer.add({
-                        "checkIn": _checkIn,
-                        "names": names,
-                        "lastName": lastName,
-                        "dniNumber": dniNumber,
-                        "sex": sex,
-                        "age": age,
-                        "maritalStatus": maritalStatus,
-                        "occupation": occupation,
-                        "origin": origin,
-                        "destiny": destiny,
-                        "roomNumber": roomNumber,
-                        "adultsNumber": adultsNumber,
-                        "childrenNumber": childrenNumber,
-                        "checkOut": _checkOut,
-                      });
+                          final d = p0.toDate();
 
-                      _namesController.text = '';
-                      _lastNameController.text = '';
-                      _dniNumberController.text = '';
-                      _sexController.text = '';
-                      _ageController.text = '';
-                      _maritalStatusController.text = '';
-                      _occupationController.text = '';
-                      _originController.text = '';
-                      _destinyController.text = '';
-                      _roomNumberController.text = '';
-                      _adultsNumberController.text = '';
-                      _childrenNumberController.text = '';
-                    },
-                  )
-                ],
+                          debugPrint('${d.day}/${d.month}/${d.year}');
+                          debugPrint('${d.hour}:${d.minute}');
+
+                          setState(() {
+                            _checkIn = p0;
+                          });
+                        }),
+                        DatetimePickerWidget((p0) {
+                          debugPrint('$p0');
+
+                          final d = p0.toDate();
+
+                          debugPrint('${d.day}/${d.month}/${d.year}');
+                          debugPrint('${d.hour}:${d.minute}');
+
+                          setState(() {
+                            _checkOut = p0;
+                          });
+                        }),
+                      ],
+                    ),
+                    _field(_namesController, label: 'Nombres'),
+                    _field(_lastNameController, label: 'Apellidos'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_dniNumberController, label: 'Dni N°'),
+                        ),
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_maritalStatusController,
+                              label: 'Estado Civil'),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_sexController, label: 'Sexo'),
+                        ),
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_ageController, label: 'Edad'),
+                        ),
+                      ],
+                    ),
+                    _field(_occupationController, label: 'Ocupación'),
+                    _field(_originController, label: 'Procedencia'),
+                    _field(_destinyController, label: 'Destino'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 100.0,
+                          height: 60.0,
+                          child: _field(_roomNumberController,
+                              label: 'Habitación N°'),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_adultsNumberController,
+                              label: 'Adultos N°'),
+                        ),
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_childrenNumberController,
+                              label: 'Niños N°'),
+                        ),
+                      ],
+                    ),
+
+                    // check out with date picker of selection date and time
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      child: const Text('Crear'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue.shade900,
+                      ),
+                      onPressed: () async {
+                        if (!_formKeyCreate.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Complete los campos')),
+                          );
+
+                          return;
+                        }
+
+                        final String names = _namesController.text;
+                        final String lastName = _lastNameController.text;
+                        final String dniNumber = _dniNumberController.text;
+                        final String sex = _sexController.text;
+                        final String age = _ageController.text;
+                        final String maritalStatus =
+                            _maritalStatusController.text;
+                        final String occupation = _occupationController.text;
+                        final String origin = _originController.text;
+                        final String destiny = _destinyController.text;
+                        final String roomNumber = _roomNumberController.text;
+                        final String adultsNumber =
+                            _adultsNumberController.text;
+                        final String childrenNumber =
+                            _childrenNumberController.text;
+
+                        await _customer.add({
+                          "checkIn": _checkIn,
+                          "names": names,
+                          "lastName": lastName,
+                          "dniNumber": dniNumber,
+                          "sex": sex,
+                          "age": age,
+                          "maritalStatus": maritalStatus,
+                          "occupation": occupation,
+                          "origin": origin,
+                          "destiny": destiny,
+                          "roomNumber": roomNumber,
+                          "adultsNumber": adultsNumber,
+                          "childrenNumber": childrenNumber,
+                          "checkOut": _checkOut,
+                        });
+
+                        _limpiarTextos();
+
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Se ha creado el cliente $names $lastName.")));
+                        }
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -327,236 +300,213 @@ class _HomePageState extends State<HomePage> {
           documentSnapshot['adultsNumber'].toString();
       _childrenNumberController.text =
           documentSnapshot['childrenNumber'].toString();
+      _checkIn = documentSnapshot['checkIn'];
+      _checkOut = documentSnapshot['checkOut'];
     }
+
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (BuildContext ctx) {
-          return Padding(
-            padding: EdgeInsets.only(
-              top: 20,
-              left: 20,
-              right: 20,
-              //prevent the soft keyboard from covering text fields
-              bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text(
-                        'Editar Cliente',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+          return Form(
+            key: _formKeyUpdate,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20,
+                left: 20,
+                right: 20,
+                //prevent the soft keyboard from covering text fields
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text(
+                          'Editar Cliente',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        'Ingreso  ',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        '  Salida  ',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DatetimePickerWidget((p0) {
-                        debugPrint('$p0');
-
-                        final d = p0.toDate();
-
-                        debugPrint('${d.day}/${d.month}/${d.year}');
-                        debugPrint('${d.hour}:${d.minute}');
-
-                        setState(() {
-                          _checkIn = p0;
-                        });
-                      }),
-                      DatetimePickerWidget((p0) {
-                        debugPrint('$p0');
-
-                        final d = p0.toDate();
-
-                        debugPrint('${d.day}/${d.month}/${d.year}');
-                        debugPrint('${d.hour}:${d.minute}');
-
-                        setState(() {
-                          _checkOut = p0;
-                        });
-                      }),
-                    ],
-                  ),
-                  TextField(
-                    controller: _namesController,
-                    decoration: const InputDecoration(labelText: 'Nombres'),
-                  ),
-                  TextField(
-                    controller: _lastNameController,
-                    decoration: const InputDecoration(labelText: 'Apellidos'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _dniNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Dni N°'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _maritalStatusController,
-                          decoration:
-                              const InputDecoration(labelText: 'Estado Civil'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _sexController,
-                          decoration: const InputDecoration(labelText: 'Sexo'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _ageController,
-                          decoration: const InputDecoration(labelText: 'Edad'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    controller: _occupationController,
-                    decoration: const InputDecoration(labelText: 'Ocupación'),
-                  ),
-                  TextField(
-                    controller: _originController,
-                    decoration: const InputDecoration(labelText: 'Procedencia'),
-                  ),
-                  TextField(
-                    controller: _destinyController,
-                    decoration: const InputDecoration(labelText: 'Destino'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 100.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _roomNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Habitación N°'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _adultsNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Adultos N°'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 150.0,
-                        height: 60.0,
-                        child: TextField(
-                          controller: _childrenNumberController,
-                          decoration:
-                              const InputDecoration(labelText: 'Niños N°'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    child: const Text('Actualizar'),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue.shade900,
+                      ],
                     ),
-                    onPressed: () async {
-                      final String names = _namesController.text;
-                      final String lastName = _lastNameController.text;
-                      final String dniNumber = _dniNumberController.text;
-                      final String sex = _sexController.text;
-                      final String age = _ageController.text;
-                      final String maritalStatus =
-                          _maritalStatusController.text;
-                      final String occupation = _occupationController.text;
-                      final String origin = _originController.text;
-                      final String destiny = _destinyController.text;
-                      final String roomNumber = _roomNumberController.text;
-                      final String adultsNumber = _adultsNumberController.text;
-                      final String childrenNumber =
-                          _childrenNumberController.text;
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Ingreso  ',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          '  Salida  ',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DatetimePickerWidget(
+                          (p0) {
+                            debugPrint('$p0');
 
-                      await _customer.doc(documentSnapshot!.id).update({
-                        "names": names,
-                        "lastName": lastName,
-                        "dniNumber": dniNumber,
-                        "sex": sex,
-                        "age": age,
-                        "maritalStatus": maritalStatus,
-                        "occupation": occupation,
-                        "origin": origin,
-                        "destiny": destiny,
-                        "roomNumber": roomNumber,
-                        "adultsNumber": adultsNumber,
-                        "childrenNumber": childrenNumber,
-                      });
-                      _namesController.text = '';
-                      _lastNameController.text = '';
-                      _dniNumberController.text = '';
-                      _sexController.text = '';
-                      _ageController.text = '';
-                      _maritalStatusController.text = '';
-                      _occupationController.text = '';
-                      _originController.text = '';
-                      _destinyController.text = '';
-                      _roomNumberController.text = '';
-                      _adultsNumberController.text = '';
-                      _childrenNumberController.text = '';
-                    },
-                  )
-                ],
+                            final d = p0.toDate();
+
+                            debugPrint('${d.day}/${d.month}/${d.year}');
+                            debugPrint('${d.hour}:${d.minute}');
+
+                            setState(() {
+                              _checkIn = p0;
+                            });
+                          },
+                          selectedTime: _checkIn,
+                        ),
+                        DatetimePickerWidget(
+                          (p0) {
+                            debugPrint('$p0');
+
+                            final d = p0.toDate();
+
+                            debugPrint('${d.day}/${d.month}/${d.year}');
+                            debugPrint('${d.hour}:${d.minute}');
+
+                            setState(() {
+                              _checkOut = p0;
+                            });
+                          },
+                          selectedTime: _checkOut,
+                        ),
+                      ],
+                    ),
+                    _field(_namesController, label: 'Nombres'),
+                    _field(_lastNameController, label: 'Apellidos'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_dniNumberController, label: 'Dni N°'),
+                        ),
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_maritalStatusController,
+                              label: 'Estado Civil'),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_sexController, label: 'Sexo'),
+                        ),
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_ageController, label: 'Edad'),
+                        ),
+                      ],
+                    ),
+                    _field(_occupationController, label: 'Ocupación'),
+                    _field(_originController, label: 'Procedencia'),
+                    _field(_destinyController, label: 'Destino'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 100.0,
+                          height: 60.0,
+                          child: _field(_roomNumberController,
+                              label: 'Habitación N°'),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_adultsNumberController,
+                              label: 'Adultos N°'),
+                        ),
+                        SizedBox(
+                          width: 150.0,
+                          height: 60.0,
+                          child: _field(_childrenNumberController,
+                              label: 'Niños N°'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      child: const Text('Actualizar'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue.shade900,
+                      ),
+                      onPressed: () async {
+                        if (!_formKeyUpdate.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Complete los campos')),
+                          );
+
+                          return;
+                        }
+
+                        final String names = _namesController.text;
+                        final String lastName = _lastNameController.text;
+                        final String dniNumber = _dniNumberController.text;
+                        final String sex = _sexController.text;
+                        final String age = _ageController.text;
+                        final String maritalStatus =
+                            _maritalStatusController.text;
+                        final String occupation = _occupationController.text;
+                        final String origin = _originController.text;
+                        final String destiny = _destinyController.text;
+                        final String roomNumber = _roomNumberController.text;
+                        final String adultsNumber =
+                            _adultsNumberController.text;
+                        final String childrenNumber =
+                            _childrenNumberController.text;
+
+                        await _customer.doc(documentSnapshot!.id).update({
+                          "names": names,
+                          "lastName": lastName,
+                          "dniNumber": dniNumber,
+                          "sex": sex,
+                          "age": age,
+                          "maritalStatus": maritalStatus,
+                          "occupation": occupation,
+                          "origin": origin,
+                          "destiny": destiny,
+                          "roomNumber": roomNumber,
+                          "adultsNumber": adultsNumber,
+                          "childrenNumber": childrenNumber,
+                          "checkIn": _checkIn,
+                          "checkOut": _checkOut,
+                        });
+
+                        _limpiarTextos();
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -566,8 +516,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> _delete(String customerId) async {
     await _customer.doc(customerId).delete();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Eliminado satisfactoriamente')));
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Eliminado satisfactoriamente')));
+    }
   }
 
   @override
@@ -603,7 +555,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _create(),
+        onPressed: () {
+          _limpiarTextos();
+          _create();
+        },
         child: const Icon(Icons.person_add),
         backgroundColor: Colors.blue.shade900,
       ),
@@ -632,13 +587,21 @@ class _HomePageState extends State<HomePage> {
                               splashRadius: 20,
                               icon: const Icon(Icons.edit),
                               color: Colors.blue.shade900,
-                              onPressed: () => _update(documentSnapshot)),
+                              onPressed: () => _showDialog(
+                                    context,
+                                    description: '¿Esta seguro de actualizar?',
+                                    action: () => _update(documentSnapshot),
+                                  )),
                           // Press this button to delete a single customer
                           IconButton(
                             splashRadius: 20,
                             icon: const Icon(Icons.delete),
                             color: Colors.blue.shade900,
-                            onPressed: () => _delete(documentSnapshot.id),
+                            onPressed: () => _showDialog(
+                              context,
+                              description: '¿Esta seguro de eliminar?',
+                              action: () => _delete(documentSnapshot.id),
+                            ),
                           ),
                         ],
                       ),
@@ -654,5 +617,75 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  Widget _field(
+    TextEditingController controller, {
+    required String label,
+    TextInputType? keyboardType,
+    String? textValidator,
+  }) {
+    return TextFormField(
+      keyboardType: keyboardType,
+      controller: controller,
+      decoration: InputDecoration(labelText: label),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return textValidator ?? 'Por favor, introduzca un texto';
+        }
+        return null;
+      },
+    );
+  }
+
+  void _showDialog(
+    BuildContext context, {
+    String? description,
+    required void Function() action,
+  }) async {
+    final respuesta = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Confirmacion'),
+        content: Text(description ?? '¿Esta seguro?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              if (mounted) {
+                Navigator.pop(context, false);
+              }
+            },
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (mounted) {
+                Navigator.pop(context, true);
+              }
+            },
+            child: const Text('Si'),
+          ),
+        ],
+      ),
+    );
+
+    if (respuesta == true) {
+      action();
+    }
+  }
+
+  void _limpiarTextos() {
+    _namesController.text = '';
+    _lastNameController.text = '';
+    _dniNumberController.text = '';
+    _sexController.text = '';
+    _ageController.text = '';
+    _maritalStatusController.text = '';
+    _occupationController.text = '';
+    _originController.text = '';
+    _destinyController.text = '';
+    _roomNumberController.text = '';
+    _adultsNumberController.text = '';
+    _childrenNumberController.text = '';
   }
 }

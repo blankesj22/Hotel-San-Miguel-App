@@ -4,9 +4,11 @@ import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class DatetimePickerWidget extends StatefulWidget {
-  DatetimePickerWidget(this.onTimeSelected, {Key? key}) : super(key: key);
+  DatetimePickerWidget(this.onTimeSelected, {this.selectedTime, Key? key})
+      : super(key: key);
 
   Function(Timestamp) onTimeSelected;
+  Timestamp? selectedTime;
 
   @override
   State<DatetimePickerWidget> createState() => _DatetimePickerWidgetState();
@@ -14,6 +16,14 @@ class DatetimePickerWidget extends StatefulWidget {
 
 class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
   DateTime? dateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selectedTime != null) {
+      dateTime = widget.selectedTime!.toDate();
+    }
+  }
 
   String getText() {
     if (dateTime == null) {
@@ -29,7 +39,7 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
         style: ElevatedButton.styleFrom(
           primary: Colors.yellow.shade600,
         ),
-        child: Text(getText()),
+        child: Text(getText(), style: const TextStyle(color: Colors.black54)),
       );
 
   Future pickeDateTime(BuildContext context) async {

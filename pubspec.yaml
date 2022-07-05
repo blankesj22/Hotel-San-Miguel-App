@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   cloud_firestore: ^3.1.18
   intl: ^0.17.0
+  gender_picker: ^1.1.0
 
 dev_dependencies:
   flutter_test:

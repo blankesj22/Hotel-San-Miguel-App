@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:hotel_san_miguel/screens/login_screen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,10 +15,10 @@ final items = <String>[
   'Soltero',
   'Casado',
   'Divorciado',
-  'Viudo'
+  'Viudo',
 ];
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -28,10 +30,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Hotel San Miguel',
-      home: HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+      ),
+      home: const LoginScreen(),
+      //HomePage(),
     );
   }
 }
@@ -717,6 +723,7 @@ class _HomePageState extends State<HomePage> {
       alignment: Alignment.center,
       child: DropdownButton<String>(
         value: _valueDrop,
+        isExpanded: false,
         elevation: 16,
         style: const TextStyle(color: Colors.black87, fontSize: 16),
         underline: Container(

@@ -575,9 +575,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Card(
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: Text(documentSnapshot['names'] +
-                        ' ' +
-                        documentSnapshot['lastName']),
+                    title: Text(
+                      documentSnapshot['names'] +
+                          ' ' +
+                          documentSnapshot['lastName'],
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
                     subtitle: Text(documentSnapshot['dniNumber'].toString()),
                     trailing: SizedBox(
                       width: 98.0,

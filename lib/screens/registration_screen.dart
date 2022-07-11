@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return 'Ingrese sus nombres';
         }
         if (!regex.hasMatch(value)) {
-          return 'Los nombres debe tener al menos 3 caracteres';
+          return 'Ingrese un nombre válido (mín. 3 caracteres)';
         }
         return null;
       },
@@ -97,9 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return 'Ingrese su correo electrónico';
         }
         // reg expression for email validation
-        if (!RegExp(
-                r'^[a-zA-Z0-9.a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+')
-            .hasMatch(value)) {
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
           return 'Ingrese un correo electrónico válido';
         }
         return null;
@@ -123,13 +122,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       controller: passwordEditingController,
       obscureText: true,
       validator: (value) {
-        RegExp regex = RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+        RegExp regex = RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
           return 'Ingrese su contraseña';
         }
         if (!regex.hasMatch(value)) {
-          return 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial';
+          return 'Ingrese una contraseña válida (mín. 8 caracteres)';
         }
         return null;
       },
@@ -152,14 +150,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       controller: confirmPasswordEditingController,
       obscureText: true,
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Ingrese su contraseña';
-        }
-        if (confirmPasswordEditingController.text.length < 8) {
-          return 'La contraseña debe tener al menos 8 caracteres';
-        }
-        if (passwordEditingController.text != value) {
-          return 'Las contraseñas no coinciden';
+        if (confirmPasswordEditingController.text !=
+            passwordEditingController.text) {
+          return "La contraseña no coincide";
         }
         return null;
       },
@@ -304,7 +297,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             break;
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        //print(error.code);
+        if (kDebugMode) {
+          print(error.code);
+        }
       }
     }
   }

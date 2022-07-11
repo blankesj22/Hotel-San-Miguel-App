@@ -42,9 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
           return 'Ingrese su correo electrónico';
         }
         // reg expression for email validation
-        if (!RegExp(
-                r'^[a-zA-Z0-9.a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+')
-            .hasMatch(value)) {
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
           return 'Ingrese un correo electrónico válido';
         }
         return null;
@@ -68,13 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: passwordController,
       obscureText: true,
       validator: (value) {
-        RegExp regex = RegExp(
-            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+        RegExp regex = RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
           return 'Ingrese su contraseña';
         }
         if (!regex.hasMatch(value)) {
-          return 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial';
+          return 'Ingrese una contraseña válida (mín. 8 caracteres)';
         }
         return null;
       },

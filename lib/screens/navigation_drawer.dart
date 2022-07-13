@@ -103,7 +103,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 style: TextStyle(fontSize: 16.0),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed('/report');
+                // Navigator.of(context).pushReplacementNamed('/report');
               },
             ),
             const Divider(
@@ -116,7 +116,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 style: TextStyle(fontSize: 16.0),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed('/settings');
+                // Navigator.of(context).pushReplacementNamed('/settings');
               },
             ),
             ListTile(

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// //import 'package:firebase_core/firebase_core.dart';
-
-// import 'package:hotel_san_miguel/model/user_model.dart';
-// import 'login_screen.dart';
 
 import 'package:gender_picker/gender_picker.dart';
 import 'package:gender_picker/source/enums.dart';
@@ -215,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ElevatedButton(
                           child: const Text('Crear'),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red.shade700,
+                            primary: Colors.red,
                           ),
                           onPressed: () async {
                             if (!_formKeyCreate.currentState!.validate()) {
@@ -446,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ElevatedButton(
                         child: const Text('Actualizar'),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.red.shade700,
+                          primary: Colors.red,
                         ),
                         onPressed: () async {
                           if (!_formKeyUpdate.currentState!.validate()) {
@@ -526,32 +521,18 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Hotel San Miguel'),
         centerTitle: true,
-        backgroundColor: Colors.indigo,
-        actions: <Widget>[
-          IconButton(
-            splashRadius: 20,
-            icon: const Icon(Icons.navigate_next),
-            tooltip: 'Reportes',
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute<void>(
-                builder: (BuildContext context) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: const Text('Reportes'),
-                      backgroundColor: Colors.indigo,
-                    ),
-                    body: const Center(
-                      child: Text(
-                        'This is the next page',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  );
-                },
-              ));
-            },
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.indigo,
+                Colors.red,
+              ],
+            ),
           ),
-        ],
+        ),
       ),
       drawer: const NavigationDrawer(),
       floatingActionButton: FloatingActionButton(
@@ -560,7 +541,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _create();
         },
         child: const Icon(Icons.person_add),
-        backgroundColor: Colors.red.shade700,
+        backgroundColor: Colors.red,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StreamBuilder(
@@ -573,7 +554,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final DocumentSnapshot documentSnapshot =
                     streamSnapshot.data!.docs[index];
                 return Card(
-                  margin: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10.0),
                   child: ListTile(
                     title: Text(
                       documentSnapshot['names'] +
@@ -589,7 +570,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           IconButton(
                               splashRadius: 20,
                               icon: const Icon(Icons.edit),
-                              color: Colors.blue.shade900,
+                              color: Colors.indigo,
                               onPressed: () => _showDialog(
                                     context,
                                     description: '¿Esta seguro de actualizar?',
@@ -599,7 +580,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           IconButton(
                             splashRadius: 20,
                             icon: const Icon(Icons.delete),
-                            color: Colors.blue.shade900,
+                            color: Colors.indigo,
                             onPressed: () => _showDialog(
                               context,
                               description: '¿Esta seguro de eliminar?',
@@ -677,9 +658,9 @@ class _HomeScreenState extends State<HomeScreen> {
         maleText: 'Masculino',
         femaleText: 'Femenino',
         otherGenderText: 'Otro',
-        linearGradient: LinearGradient(colors: [
-          Colors.yellow.shade600,
-          Colors.red.shade700,
+        linearGradient: const LinearGradient(colors: [
+          Colors.indigo,
+          Colors.red,
         ]),
         selectedGenderTextStyle: const TextStyle(
           color: Colors.black87,
@@ -781,86 +762,4 @@ class _HomeScreenState extends State<HomeScreen> {
     _adultsNumberController.text = '';
     _childrenNumberController.text = '';
   }
-  // User? user = FirebaseAuth.instance.currentUser;
-  // UserModel loggedInUser = UserModel();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   FirebaseFirestore.instance
-  //       .collection("users")
-  //       .doc(user!.uid)
-  //       .get()
-  //       .then((value) {
-  //     loggedInUser = UserModel.fromMap(value.data());
-  //     setState(() {});
-  //   });
-  // }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: const Text('Hotel San Miguel'),
-  //       centerTitle: true,
-  //     ),
-  //     body: Center(
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(20.0),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           children: <Widget>[
-  //             SizedBox(
-  //               height: 155.0,
-  //               child: Image.asset(
-  //                 "assets/images/logo.png",
-  //                 fit: BoxFit.contain,
-  //               ),
-  //             ),
-  //             const Text(
-  //               '¡Bienvenido!',
-  //               style: TextStyle(
-  //                 fontSize: 20.0,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             const SizedBox(
-  //               height: 10.0,
-  //             ),
-  //             Text(
-  //               "${loggedInUser.names} ${loggedInUser.lastName}",
-  //               style: const TextStyle(
-  //                   color: Colors.black54,
-  //                   fontWeight: FontWeight.w500,
-  //                   fontSize: 20.0),
-  //             ),
-  //             Text(
-  //               "${loggedInUser.email}",
-  //               style: const TextStyle(
-  //                   color: Colors.black54,
-  //                   fontWeight: FontWeight.w500,
-  //                   fontSize: 20.0),
-  //             ),
-  //             const SizedBox(
-  //               height: 15.0,
-  //             ),
-  //             ActionChip(
-  //                 label: const Text('Cerrar Sesión'),
-  //                 onPressed: () {
-  //                   logout(context);
-  //                 }),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // // the logout function
-  // Future<void> logout(BuildContext context) async {
-  //   await FirebaseAuth.instance.signOut();
-  //   Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(builder: (context) => const LoginScreen()));
-  // }
 }

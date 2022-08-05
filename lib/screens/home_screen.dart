@@ -7,6 +7,7 @@ import 'package:gender_picker/source/enums.dart';
 import 'package:hotel_san_miguel/screens/navigation_drawer.dart';
 
 import 'package:hotel_san_miguel/widgets/button_datepicker.dart';
+import 'package:hotel_san_miguel/widgets/space_interline_xs.dart';
 
 final items = <String>[
   'Estado Civil',
@@ -41,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _adultsNumberController = TextEditingController();
   final TextEditingController _childrenNumberController =
       TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   Timestamp _checkIn = Timestamp.now();
   Timestamp _checkOut = Timestamp.now();
@@ -75,204 +77,222 @@ class _HomeScreenState extends State<HomeScreen> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext ctx) {
-          return StatefulBuilder(
-            builder: (context, setEstado) {
-              return Form(
-                key: _formKeyCreate,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    //prevent the soft keyboard from covering text fields
-                    bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            Text(
-                              'Registrar Cliente',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+          return SizedBox(
+            height: 720.0,
+            child: StatefulBuilder(
+              builder: (context, setEstado) {
+                return Form(
+                  key: _formKeyCreate,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                      //prevent the soft keyboard from covering text fields
+                      bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              Text(
+                                'Registrar Cliente',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              'Ingreso  ',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              '  Salida  ',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            DatetimePickerWidget((p0) {
-                              debugPrint('$p0');
-
-                              final d = p0.toDate();
-
-                              debugPrint('${d.day}/${d.month}/${d.year}');
-                              debugPrint('${d.hour}:${d.minute}');
-
-                              setState(() {
-                                _checkIn = p0;
-                              });
-                            }),
-                            DatetimePickerWidget((p0) {
-                              debugPrint('$p0');
-
-                              final d = p0.toDate();
-
-                              debugPrint('${d.day}/${d.month}/${d.year}');
-                              debugPrint('${d.hour}:${d.minute}');
-
-                              setState(() {
-                                _checkOut = p0;
-                              });
-                            }),
-                          ],
-                        ),
-                        _genderwidget(true, false),
-                        _field(_namesController, label: 'Nombres'),
-                        _field(_lastNameController, label: 'Apellidos'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 150.0,
-                              height: 60.0,
-                              child:
-                                  _field(_dniNumberController, label: 'Dni N°'),
-                            ),
-                            _maritalStatuswidget(setEstado)
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 150.0,
-                              height: 60.0,
-                              child: _field(_ageController, label: 'Edad'),
-                            ),
-                            SizedBox(
-                              width: 150.0,
-                              height: 60.0,
-                              child: _field(_roomNumberController,
-                                  label: 'Habitación N°'),
-                            ),
-                          ],
-                        ),
-                        _field(_occupationController, label: 'Ocupación'),
-                        _field(_originController, label: 'Procedencia'),
-                        _field(_destinyController, label: 'Destino'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: 150.0,
-                              height: 60.0,
-                              child: _field(_adultsNumberController,
-                                  label: 'Adultos N°'),
-                            ),
-                            SizedBox(
-                              width: 150.0,
-                              height: 60.0,
-                              child: _field(_childrenNumberController,
-                                  label: 'Niños N°'),
-                            ),
-                          ],
-                        ),
-                        // check out with date picker of selection date and time
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          child: const Text('Crear'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
+                            ],
                           ),
-                          onPressed: () async {
-                            if (!_formKeyCreate.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Complete los campos')),
-                              );
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                'Ingreso  ',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                '  Salida  ',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              DatetimePickerWidget((p0) {
+                                debugPrint('$p0');
 
-                              return;
-                            }
+                                final d = p0.toDate();
 
-                            final String names = _namesController.text;
-                            final String lastName = _lastNameController.text;
-                            final String dniNumber = _dniNumberController.text;
-                            final String sex = _getGenderDB();
-                            final String age = _ageController.text;
-                            final String maritalStatus =
-                                _maritalStatusController.text;
-                            final String occupation =
-                                _occupationController.text;
-                            final String origin = _originController.text;
-                            final String destiny = _destinyController.text;
-                            final String roomNumber =
-                                _roomNumberController.text;
-                            final String adultsNumber =
-                                _adultsNumberController.text;
-                            final String childrenNumber =
-                                _childrenNumberController.text;
+                                debugPrint('${d.day}/${d.month}/${d.year}');
+                                debugPrint('${d.hour}:${d.minute}');
 
-                            await _customer.add({
-                              "checkIn": _checkIn,
-                              "names": names,
-                              "lastName": lastName,
-                              "dniNumber": dniNumber,
-                              "sex": sex,
-                              "age": age,
-                              "maritalStatus": maritalStatus,
-                              "occupation": occupation,
-                              "origin": origin,
-                              "destiny": destiny,
-                              "roomNumber": roomNumber,
-                              "adultsNumber": adultsNumber,
-                              "childrenNumber": childrenNumber,
-                              "checkOut": _checkOut,
-                            });
+                                setState(() {
+                                  _checkIn = p0;
+                                });
+                              }),
+                              DatetimePickerWidget((p0) {
+                                debugPrint('$p0');
 
-                            _limpiarTextos();
+                                final d = p0.toDate();
 
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      "Se ha creado el cliente $names $lastName.")));
-                              Navigator.pop(context);
-                            }
-                          },
-                        )
-                      ],
+                                debugPrint('${d.day}/${d.month}/${d.year}');
+                                debugPrint('${d.hour}:${d.minute}');
+
+                                setState(() {
+                                  _checkOut = p0;
+                                });
+                              }),
+                            ],
+                          ),
+                          _genderwidget(true, false),
+                          const SpaceInterlineXs(),
+                          SizedBox(
+                            width: 250.0,
+                            child: _searchcustomer(),
+                          ),
+                          const SpaceInterlineXs(),
+                          _field(_namesController, label: 'Nombres'),
+                          const SpaceInterlineXs(),
+                          _field(_lastNameController, label: 'Apellidos'),
+                          const SpaceInterlineXs(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 170.0,
+                                child: _field(_dniNumberController,
+                                    label: 'Dni N°'),
+                              ),
+                              SizedBox(
+                                width: 170.0,
+                                child: _maritalStatuswidget(setEstado),
+                              ),
+                            ],
+                          ),
+                          const SpaceInterlineXs(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 170.0,
+                                height: 60.0,
+                                child: _field(_ageController, label: 'Edad'),
+                              ),
+                              SizedBox(
+                                width: 170.0,
+                                height: 60.0,
+                                child: _field(_roomNumberController,
+                                    label: 'Habitación N°'),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          _field(_occupationController, label: 'Ocupación'),
+                          const SpaceInterlineXs(),
+                          _field(_originController, label: 'Procedencia'),
+                          const SpaceInterlineXs(),
+                          _field(_destinyController, label: 'Destino'),
+                          const SpaceInterlineXs(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 170.0,
+                                height: 60.0,
+                                child: _field(_adultsNumberController,
+                                    label: 'Adultos N°'),
+                              ),
+                              SizedBox(
+                                width: 170.0,
+                                height: 60.0,
+                                child: _field(_childrenNumberController,
+                                    label: 'Niños N°'),
+                              ),
+                            ],
+                          ),
+                          const SpaceInterlineXs(),
+                          ElevatedButton(
+                            child: const Text('Crear'),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                            ),
+                            onPressed: () async {
+                              if (!_formKeyCreate.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Complete los campos')),
+                                );
+
+                                return;
+                              }
+
+                              final String names = _namesController.text;
+                              final String lastName = _lastNameController.text;
+                              final String dniNumber =
+                                  _dniNumberController.text;
+                              final String sex = _getGenderDB();
+                              final String age = _ageController.text;
+                              final String maritalStatus =
+                                  _maritalStatusController.text;
+                              final String occupation =
+                                  _occupationController.text;
+                              final String origin = _originController.text;
+                              final String destiny = _destinyController.text;
+                              final String roomNumber =
+                                  _roomNumberController.text;
+                              final String adultsNumber =
+                                  _adultsNumberController.text;
+                              final String childrenNumber =
+                                  _childrenNumberController.text;
+
+                              await _customer.add({
+                                "checkIn": _checkIn,
+                                "names": names,
+                                "lastName": lastName,
+                                "dniNumber": dniNumber,
+                                "sex": sex,
+                                "age": age,
+                                "maritalStatus": maritalStatus,
+                                "occupation": occupation,
+                                "origin": origin,
+                                "destiny": destiny,
+                                "roomNumber": roomNumber,
+                                "adultsNumber": adultsNumber,
+                                "childrenNumber": childrenNumber,
+                                "checkOut": _checkOut,
+                              });
+
+                              _limpiarTextos();
+
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Se ha creado el cliente $names $lastName.")));
+                                Navigator.pop(context);
+                              }
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
         });
   }
@@ -302,206 +322,219 @@ class _HomeScreenState extends State<HomeScreen> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext ctx) {
-          return StatefulBuilder(builder: (context, setEstado) {
-            return Form(
-              key: _formKeyUpdate,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: 20,
-                  left: 20,
-                  right: 20,
-                  //prevent the soft keyboard from covering text fields
-                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            'Editar Cliente',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+          return SizedBox(
+            height: 720.0,
+            child: StatefulBuilder(builder: (context, setEstado) {
+              return Form(
+                key: _formKeyUpdate,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 20,
+                    left: 20,
+                    right: 20,
+                    //prevent the soft keyboard from covering text fields
+                    bottom: MediaQuery.of(ctx).viewInsets.bottom + 20,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: const [
+                            Text(
+                              'Editar Cliente',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            'Ingreso  ',
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            '  Salida  ',
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          DatetimePickerWidget(
-                            (p0) {
-                              debugPrint('$p0');
-
-                              final d = p0.toDate();
-
-                              debugPrint('${d.day}/${d.month}/${d.year}');
-                              debugPrint('${d.hour}:${d.minute}');
-
-                              setState(() {
-                                _checkIn = p0;
-                              });
-                            },
-                            selectedTime: _checkIn,
-                          ),
-                          DatetimePickerWidget(
-                            (p0) {
-                              debugPrint('$p0');
-
-                              final d = p0.toDate();
-
-                              debugPrint('${d.day}/${d.month}/${d.year}');
-                              debugPrint('${d.hour}:${d.minute}');
-
-                              setState(() {
-                                _checkOut = p0;
-                              });
-                            },
-                            selectedTime: _checkOut,
-                          ),
-                        ],
-                      ),
-                      _genderwidget(true, false),
-                      _field(_namesController, label: 'Nombres'),
-                      _field(_lastNameController, label: 'Apellidos'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 150.0,
-                            height: 60.0,
-                            child:
-                                _field(_dniNumberController, label: 'Dni N°'),
-                          ),
-                          _maritalStatuswidget(setEstado)
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 150.0,
-                            height: 60.0,
-                            child: _field(_ageController, label: 'Edad'),
-                          ),
-                          SizedBox(
-                            width: 150.0,
-                            height: 60.0,
-                            child: _field(_roomNumberController,
-                                label: 'Habitación N°'),
-                          ),
-                        ],
-                      ),
-                      _field(_occupationController, label: 'Ocupación'),
-                      _field(_originController, label: 'Procedencia'),
-                      _field(_destinyController, label: 'Destino'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 150.0,
-                            height: 60.0,
-                            child: _field(_adultsNumberController,
-                                label: 'Adultos N°'),
-                          ),
-                          SizedBox(
-                            width: 150.0,
-                            height: 60.0,
-                            child: _field(_childrenNumberController,
-                                label: 'Niños N°'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        child: const Text('Actualizar'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
+                          ],
                         ),
-                        onPressed: () async {
-                          if (!_formKeyUpdate.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Complete los campos')),
-                            );
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Ingreso  ',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(
+                              '  Salida  ',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            DatetimePickerWidget(
+                              (p0) {
+                                debugPrint('$p0');
 
-                            return;
-                          }
+                                final d = p0.toDate();
 
-                          final String names = _namesController.text;
-                          final String lastName = _lastNameController.text;
-                          final String dniNumber = _dniNumberController.text;
-                          final String sex = _getGenderDB();
-                          final String age = _ageController.text;
-                          final String maritalStatus =
-                              _maritalStatusController.text;
-                          final String occupation = _occupationController.text;
-                          final String origin = _originController.text;
-                          final String destiny = _destinyController.text;
-                          final String roomNumber = _roomNumberController.text;
-                          final String adultsNumber =
-                              _adultsNumberController.text;
-                          final String childrenNumber =
-                              _childrenNumberController.text;
+                                debugPrint('${d.day}/${d.month}/${d.year}');
+                                debugPrint('${d.hour}:${d.minute}');
 
-                          await _customer.doc(documentSnapshot!.id).update({
-                            "names": names,
-                            "lastName": lastName,
-                            "dniNumber": dniNumber,
-                            "sex": sex,
-                            "age": age,
-                            "maritalStatus": maritalStatus,
-                            "occupation": occupation,
-                            "origin": origin,
-                            "destiny": destiny,
-                            "roomNumber": roomNumber,
-                            "adultsNumber": adultsNumber,
-                            "childrenNumber": childrenNumber,
-                            "checkIn": _checkIn,
-                            "checkOut": _checkOut,
-                          });
+                                setState(() {
+                                  _checkIn = p0;
+                                });
+                              },
+                              selectedTime: _checkIn,
+                            ),
+                            DatetimePickerWidget(
+                              (p0) {
+                                debugPrint('$p0');
 
-                          _limpiarTextos();
+                                final d = p0.toDate();
 
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "Se ha actualizado el cliente $names $lastName.")));
-                            Navigator.pop(context);
-                          }
-                        },
-                      )
-                    ],
+                                debugPrint('${d.day}/${d.month}/${d.year}');
+                                debugPrint('${d.hour}:${d.minute}');
+
+                                setState(() {
+                                  _checkOut = p0;
+                                });
+                              },
+                              selectedTime: _checkOut,
+                            ),
+                          ],
+                        ),
+                        _genderwidget(true, false),
+                        const SpaceInterlineXs(),
+                        _field(_namesController, label: 'Nombres'),
+                        const SpaceInterlineXs(),
+                        _field(_lastNameController, label: 'Apellidos'),
+                        const SpaceInterlineXs(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 170.0,
+                              child:
+                                  _field(_dniNumberController, label: 'Dni N°'),
+                            ),
+                            SizedBox(
+                              width: 170.0,
+                              child: _maritalStatuswidget(setEstado),
+                            ),
+                          ],
+                        ),
+                        const SpaceInterlineXs(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 170.0,
+                              height: 60.0,
+                              child: _field(_ageController, label: 'Edad'),
+                            ),
+                            SizedBox(
+                              width: 170.0,
+                              height: 60.0,
+                              child: _field(_roomNumberController,
+                                  label: 'Habitación N°'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        _field(_occupationController, label: 'Ocupación'),
+                        const SpaceInterlineXs(),
+                        _field(_originController, label: 'Procedencia'),
+                        const SpaceInterlineXs(),
+                        _field(_destinyController, label: 'Destino'),
+                        const SpaceInterlineXs(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 170.0,
+                              height: 60.0,
+                              child: _field(_adultsNumberController,
+                                  label: 'Adultos N°'),
+                            ),
+                            SizedBox(
+                              width: 170.0,
+                              height: 60.0,
+                              child: _field(_childrenNumberController,
+                                  label: 'Niños N°'),
+                            ),
+                          ],
+                        ),
+                        const SpaceInterlineXs(),
+                        ElevatedButton(
+                          child: const Text('Actualizar'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
+                          onPressed: () async {
+                            if (!_formKeyUpdate.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Complete los campos')),
+                              );
+
+                              return;
+                            }
+
+                            final String names = _namesController.text;
+                            final String lastName = _lastNameController.text;
+                            final String dniNumber = _dniNumberController.text;
+                            final String sex = _getGenderDB();
+                            final String age = _ageController.text;
+                            final String maritalStatus =
+                                _maritalStatusController.text;
+                            final String occupation =
+                                _occupationController.text;
+                            final String origin = _originController.text;
+                            final String destiny = _destinyController.text;
+                            final String roomNumber =
+                                _roomNumberController.text;
+                            final String adultsNumber =
+                                _adultsNumberController.text;
+                            final String childrenNumber =
+                                _childrenNumberController.text;
+
+                            await _customer.doc(documentSnapshot!.id).update({
+                              "names": names,
+                              "lastName": lastName,
+                              "dniNumber": dniNumber,
+                              "sex": sex,
+                              "age": age,
+                              "maritalStatus": maritalStatus,
+                              "occupation": occupation,
+                              "origin": origin,
+                              "destiny": destiny,
+                              "roomNumber": roomNumber,
+                              "adultsNumber": adultsNumber,
+                              "childrenNumber": childrenNumber,
+                              "checkIn": _checkIn,
+                              "checkOut": _checkOut,
+                            });
+
+                            _limpiarTextos();
+
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "Se ha actualizado el cliente $names $lastName.")));
+                              Navigator.pop(context);
+                            }
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          });
+              );
+            }),
+          );
         });
   }
 
@@ -610,9 +643,19 @@ class _HomeScreenState extends State<HomeScreen> {
     String? textValidator,
   }) {
     return TextFormField(
+      autofocus: false,
       keyboardType: keyboardType,
       controller: controller,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(
+        prefixIcon: Icon(_icon(label)),
+        contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: _hintText(label),
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      textInputAction: TextInputAction.next,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return textValidator ?? 'Por favor, introduzca un texto';
@@ -658,12 +701,14 @@ class _HomeScreenState extends State<HomeScreen> {
         maleText: 'Masculino',
         femaleText: 'Femenino',
         otherGenderText: 'Otro',
-        linearGradient: const LinearGradient(colors: [
-          Colors.indigo,
-          Colors.red,
-        ]),
+        linearGradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.indigo,
+              Colors.red,
+            ]),
         selectedGenderTextStyle: const TextStyle(
-          color: Colors.black87,
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
@@ -680,27 +725,86 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _searchcustomer() {
+    return TextFormField(
+      autofocus: false,
+      keyboardType: TextInputType.number,
+      controller: _searchController,
+      decoration: InputDecoration(
+        prefixIcon: IconButton(
+            splashRadius: 20,
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              _searchdni();
+            }),
+        suffixIcon: IconButton(
+          splashRadius: 20,
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            _searchController.clear();
+          },
+        ),
+        contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Buscar por Dni',
+        labelText: 'Buscar',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      textInputAction: TextInputAction.next,
+    );
+  }
+
+  Widget _searchdni() {
+    return StreamBuilder(
+      stream: _customer.snapshots(), //build connection
+      builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+        if (streamSnapshot.hasData) {
+          return ListView.builder(
+            itemCount: streamSnapshot.data!.docs.length, //numbers of rows
+            itemBuilder: (context, index) {
+              final DocumentSnapshot documentSnapshot =
+                  streamSnapshot.data!.docs[index];
+              if (documentSnapshot['dniNumber'] == _searchController.text) {
+                return _namesController.text = documentSnapshot['names'];
+              }
+              return Container();
+            },
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
   Widget _maritalStatuswidget(void Function(void Function()) setEstado) {
     debugPrint("_valueDrop = $_valueDrop");
 
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      width: 150.0,
       alignment: Alignment.center,
-      child: DropdownButton<String>(
-        value: _valueDrop,
-        isExpanded: false,
-        elevation: 16,
-        style: const TextStyle(color: Colors.black87, fontSize: 16),
-        underline: Container(
-          height: 1,
+      decoration: BoxDecoration(
+        border: Border.all(
           color: Colors.black45,
+          width: 1.0,
         ),
-        onChanged: (String? newValue) {
-          _valueDrop = newValue;
-          setEstado(() {});
-          debugPrint('new value -> _valueDrop: $_valueDrop');
-        },
-        items: items.map(buildDrop).toList(),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _valueDrop,
+          isExpanded: false,
+          elevation: 16,
+          style: const TextStyle(color: Colors.black87, fontSize: 16),
+          onChanged: (String? newValue) {
+            _valueDrop = newValue;
+            setEstado(() {});
+            debugPrint('new value -> _valueDrop: $_valueDrop');
+          },
+          items: items.map(buildDrop).toList(),
+        ),
       ),
     );
   }
@@ -761,5 +865,58 @@ class _HomeScreenState extends State<HomeScreen> {
     _roomNumberController.text = '';
     _adultsNumberController.text = '';
     _childrenNumberController.text = '';
+    _searchController.text = '';
+  }
+}
+
+String _hintText(label) {
+  if (label == 'Nombres') {
+    return 'Nombres';
+  } else if (label == 'Apellidos') {
+    return 'Apellidos';
+  } else if (label == 'Dni N°') {
+    return '00000000';
+  } else if (label == 'Edad') {
+    return '00';
+  } else if (label == 'Ocupación') {
+    return 'Ocupación o profesión';
+  } else if (label == 'Procedencia') {
+    return 'Lugar de procedencia';
+  } else if (label == 'Destino') {
+    return 'Lugar de destino';
+  } else if (label == 'Habitación N°') {
+    return '000';
+  } else if (label == 'Adultos N°') {
+    return '00';
+  } else if (label == 'Niños N°') {
+    return '00';
+  } else {
+    return 'Por favor, introduzca un texto';
+  }
+}
+
+IconData _icon(String label) {
+  if (label == 'Nombres') {
+    return Icons.person;
+  } else if (label == 'Apellidos') {
+    return Icons.person;
+  } else if (label == 'Dni N°') {
+    return Icons.badge;
+  } else if (label == 'Edad') {
+    return Icons.escalator_warning;
+  } else if (label == 'Ocupación') {
+    return Icons.engineering;
+  } else if (label == 'Procedencia') {
+    return Icons.luggage;
+  } else if (label == 'Destino') {
+    return Icons.airplane_ticket;
+  } else if (label == 'Habitación N°') {
+    return Icons.hotel_rounded;
+  } else if (label == 'Adultos N°') {
+    return Icons.man;
+  } else if (label == 'Niños N°') {
+    return Icons.boy;
+  } else {
+    return Icons.person;
   }
 }

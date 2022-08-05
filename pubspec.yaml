@@ -36,6 +36,8 @@ dependencies:
   firebase_auth: ^3.4.1
   intl: ^0.17.0
   gender_picker: ^1.1.0
+  image_picker: ^0.8.5+3
+  firebase_storage: ^10.3.2
 
 
 dev_dependencies:
@@ -62,6 +64,7 @@ flutter:
   assets:
   - assets/images/logo_hotel.png
   - assets/images/logo.png
+  - assets/images/user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

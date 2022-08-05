@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Hotel San Miguel',
       theme: ThemeData(
+        //brightness: Brightness.dark,
         primarySwatch: Colors.indigo,
       ),
       home: const LoginScreen(),
-      //HomePage(),
     );
   }
 }

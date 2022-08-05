@@ -63,9 +63,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               style: const TextStyle(fontSize: 16.0),
             ),
             currentAccountPicture: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://picsum.photos/200/300?image=9',
-              ),
+              backgroundImage: AssetImage('assets/images/user.png'),
             ),
             decoration: const BoxDecoration(
               gradient: LinearGradient(

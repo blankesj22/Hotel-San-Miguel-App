@@ -37,9 +37,9 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
   Widget build(BuildContext context) => ElevatedButton(
         onPressed: () => pickeDateTime(context),
         style: ElevatedButton.styleFrom(
-          primary: Colors.yellow.shade600,
+          primary: Colors.indigo,
         ),
-        child: Text(getText(), style: const TextStyle(color: Colors.black54)),
+        child: Text(getText()),
       );
 
   Future pickeDateTime(BuildContext context) async {

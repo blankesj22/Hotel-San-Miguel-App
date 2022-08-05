@@ -28,6 +28,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
 
   //editing controller
+  final imageController = TextEditingController();
   final namesEditingController = TextEditingController();
   final lastNameEditingController = TextEditingController();
   final emailEditingController = TextEditingController();
@@ -36,6 +37,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //agregar imagen
+    final image = SizedBox(
+      height: 82,
+      width: 82,
+      child: Image.asset('assets/images/user.png'),
+    );
     //names field
     final namesField = TextFormField(
       autofocus: false,
@@ -204,6 +211,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Navigator.of(context).pop();
           },
         ),
+        
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -217,12 +225,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                        height: 200.0,
-                        child: Image.asset(
-                          "assets/images/logo.png",
-                          fit: BoxFit.contain,
-                        )),
+                    // SizedBox(
+                    //     height: 120.0,
+                    //     child: Image.asset(
+                    //       "assets/images/logo.png",
+                    //       fit: BoxFit.contain,
+                    //     )),
+                    image,
+                    const SpaceInterlineXs(),
                     namesField,
                     const SpaceInterlineXs(),
                     lastNameField,

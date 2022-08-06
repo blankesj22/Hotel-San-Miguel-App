@@ -30,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // string for displaying the error Message
   String? errorMessage;
 
+  bool _visibilityPass = true;
+
   @override
   Widget build(BuildContext context) {
     //email field
@@ -64,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
-      obscureText: true,
+      obscureText: _visibilityPass,
       validator: (value) {
         RegExp regex = RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
@@ -84,6 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
         labelText: 'Contraseña',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
+        ),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.remove_red_eye),
+          onPressed: () => setState(() => _visibilityPass = !_visibilityPass),
         ),
       ),
     );

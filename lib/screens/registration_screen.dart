@@ -35,6 +35,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
 
+  bool _visibilityPass = true;
+
   @override
   Widget build(BuildContext context) {
     //agregar imagen
@@ -127,7 +129,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordEditingController,
-      obscureText: true,
+      obscureText: _visibilityPass,
       validator: (value) {
         RegExp regex = RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
@@ -148,6 +150,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.remove_red_eye),
+          onPressed: () => setState(() => _visibilityPass = !_visibilityPass),
+        ),
       ),
     );
 
@@ -155,7 +161,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final confirmPasswordField = TextFormField(
       autofocus: false,
       controller: confirmPasswordEditingController,
-      obscureText: true,
+      obscureText: _visibilityPass,
       validator: (value) {
         if (confirmPasswordEditingController.text !=
             passwordEditingController.text) {
@@ -211,7 +217,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Navigator.of(context).pop();
           },
         ),
-        
       ),
       body: Center(
         child: SingleChildScrollView(

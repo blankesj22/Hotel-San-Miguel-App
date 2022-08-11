@@ -84,22 +84,28 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         child: Wrap(
           runSpacing: 8.0,
           children: <Widget>[
-            ListTile(
+            title(
               leading: const Icon(Icons.home),
-              title: const Text(
-                'Home',
-                style: TextStyle(fontSize: 16.0),
-              ),
+              title: 'Home',
               onTap: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                       builder: ((context) => const HomeScreen()))),
             ),
-            ListTile(
+            title(
+              leading: const Icon(Icons.business_rounded),
+              title: 'Habitaciones',
+            ),
+            title(
+              leading: const Icon(Icons.co_present_rounded),
+              title: 'Clientes',
+            ),
+            title(
+              leading: const Icon(Icons.add_task_rounded),
+              title: 'Beneficios',
+            ),
+            title(
               leading: const Icon(Icons.account_tree_outlined),
-              title: const Text(
-                'Reportes',
-                style: TextStyle(fontSize: 16.0),
-              ),
+              title: 'Reportes',
               onTap: () {
                 // Navigator.of(context).pushReplacementNamed('/report');
               },
@@ -107,22 +113,16 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             const Divider(
               thickness: 1.0,
             ),
-            ListTile(
+            title(
               leading: const Icon(Icons.settings),
-              title: const Text(
-                'Configuraciones',
-                style: TextStyle(fontSize: 16.0),
-              ),
+              title: 'Configuraciones',
               onTap: () {
                 // Navigator.of(context).pushReplacementNamed('/settings');
               },
             ),
-            ListTile(
+            title(
               leading: const Icon(Icons.exit_to_app),
-              title: const Text(
-                'Cerrar Sesión',
-                style: TextStyle(fontSize: 16.0),
-              ),
+              title: 'Cerrar Sesión',
               onTap: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                       builder: ((context) => const LoginScreen()))),
@@ -130,4 +130,19 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           ],
         ),
       );
+}
+
+Widget title({
+  required Icon leading,
+  required String title,
+  void Function()? onTap,
+}) {
+  return ListTile(
+    leading: leading,
+    title: Text(
+      title,
+      style: const TextStyle(fontSize: 16.0),
+    ),
+    onTap: onTap,
+  );
 }
